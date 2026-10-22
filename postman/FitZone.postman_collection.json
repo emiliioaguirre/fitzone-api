@@ -1,0 +1,857 @@
+{
+  "info": {
+    "_postman_id": "98fc541d-e369-4ca0-8688-9d8ff77de0d9",
+    "name": "FitZone - Emilio Aguirre",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "01. Registrar sucursal Centro",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const ahora = Date.now();",
+              "const fecha = ms => new Date(ms - 6 * 60 * 60 * 1000).toISOString().slice(0, 19);",
+              "pm.collectionVariables.set(\"vigencia\", fecha(ahora + 30 * 86400000).slice(0, 10));",
+              "pm.collectionVariables.set(\"vencida\", fecha(ahora - 86400000).slice(0, 10));",
+              "pm.collectionVariables.set(\"inicioYoga\", fecha(ahora + 4 * 3600000));",
+              "pm.collectionVariables.set(\"inicioFuncional\", fecha(ahora + 5 * 3600000));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idCentro\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/sucursales",
+        "description": "Registra la sucursal Centro de FitZone.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Centro\",\n  \"direccion\": \"Veracruz Centro\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "02. Registrar sucursal Norte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idNorte\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/sucursales",
+        "description": "Registra la sucursal Norte de FitZone.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Norte\",\n  \"direccion\": \"Veracruz Norte\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03. Registrar sucursal Sur",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idSur\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/sucursales",
+        "description": "Registra la tercera sucursal del gimnasio.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Sur\",\n  \"direccion\": \"Veracruz Sur\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "04. Consultar sucursales",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/sucursales",
+        "description": "Consulta las sucursales registradas."
+      }
+    },
+    {
+      "name": "05. Consultar una sucursal",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/sucursales/{{idCentro}}",
+        "description": "Consulta la sucursal Centro por su identificador."
+      }
+    },
+    {
+      "name": "06. Registrar socio",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idSocio\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/socios",
+        "description": "Registra a Emilio Alejandro Aguirre Tronco con correo institucional y membresía vigente.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Emilio Alejandro Aguirre Tronco\",\n  \"correo\": \"202360079@ucc.mx\",\n  \"vigenciaMembresia\": \"{{vigencia}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07. Registrar socio con membresía vencida",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idVencido\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/socios",
+        "description": "Prepara un socio con membresía vencida para comprobar la regla de inscripción.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Socio de prueba vencida\",\n  \"correo\": \"vencida@example.com\",\n  \"vigenciaMembresia\": \"{{vencida}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "08. Registrar segundo socio",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idSegundoSocio\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/socios",
+        "description": "Prepara otro socio para comprobar el límite de lugares.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nombre\": \"Socio de prueba de cupo\",\n  \"correo\": \"cupo@example.com\",\n  \"vigenciaMembresia\": \"{{vigencia}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "09. Consultar socios",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/socios",
+        "description": "Consulta los socios registrados."
+      }
+    },
+    {
+      "name": "10. Consultar un socio",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/socios/{{idSocio}}",
+        "description": "Consulta los datos del socio por su identificador."
+      }
+    },
+    {
+      "name": "11. Consultar membresía vigente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Membresía vigente\", () => pm.expect(pm.response.json()).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/socios/{{idSocio}}/membresia",
+        "description": "Comprueba que la membresía de Emilio está vigente."
+      }
+    },
+    {
+      "name": "12. Consultar membresía vencida",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Membresía vencida\", () => pm.expect(pm.response.json()).to.eql(false));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/socios/{{idVencido}}/membresia",
+        "description": "Comprueba que una membresía vencida devuelve falso."
+      }
+    },
+    {
+      "name": "13. Registrar clase de yoga",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idYoga\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/clases",
+        "description": "Registra una clase de yoga con el máximo de veinte lugares.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sucursal\": {\n    \"id\": {{idCentro}}\n  },\n  \"tipo\": \"YOGA\",\n  \"inicio\": \"{{inicioYoga}}\",\n  \"cupo\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "14. Registrar clase de spinning",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const recordatorio = Date.now() + 90000;",
+              "pm.collectionVariables.set(\"recordatorioDesde\", String(recordatorio));",
+              "pm.collectionVariables.set(\"inicioSpinning\", new Date(recordatorio + 2 * 3600000 - 6 * 3600000).toISOString().slice(0, 19));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idSpinning\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/clases",
+        "description": "Registra una sesión de spinning con un lugar y horario preparado para comprobar el recordatorio.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sucursal\": {\n    \"id\": {{idNorte}}\n  },\n  \"tipo\": \"SPINNING\",\n  \"inicio\": \"{{inicioSpinning}}\",\n  \"cupo\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "15. Registrar clase funcional",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idFuncional\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/clases",
+        "description": "Registra una clase funcional en la sucursal Sur.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sucursal\": {\n    \"id\": {{idSur}}\n  },\n  \"tipo\": \"FUNCIONAL\",\n  \"inicio\": \"{{inicioFuncional}}\",\n  \"cupo\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "16. Rechazar cupo superior a veinte",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/clases",
+        "description": "Rechaza una clase que supera el límite de veinte participantes.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sucursal\": {\n    \"id\": {{idCentro}}\n  },\n  \"tipo\": \"YOGA\",\n  \"inicio\": \"{{inicioYoga}}\",\n  \"cupo\": 21\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "17. Consultar clases",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/clases",
+        "description": "Consulta las sesiones de las tres sucursales."
+      }
+    },
+    {
+      "name": "18. Consultar una clase",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/clases/{{idSpinning}}",
+        "description": "Consulta el horario y la capacidad de la sesión de spinning."
+      }
+    },
+    {
+      "name": "19. Consultar cupo disponible",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Un lugar disponible\", () => pm.expect(pm.response.json()).to.eql(1));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/clases/{{idSpinning}}/cupo",
+        "description": "Comprueba que la sesión tiene un lugar disponible antes de registrar al socio."
+      }
+    },
+    {
+      "name": "20. Rechazar inscripción con membresía vencida",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 403\", function () { pm.response.to.have.status(403); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Rechaza la inscripción de un socio cuya membresía está vencida.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socio\": {\n    \"id\": {{idVencido}}\n  },\n  \"clase\": {\n    \"id\": {{idSpinning}}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "21. Inscribir socio en la clase",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idInscripcion\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Inscribe a Emilio en spinning y solicita la confirmación de su lugar.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socio\": {\n    \"id\": {{idSocio}}\n  },\n  \"clase\": {\n    \"id\": {{idSpinning}}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "22. Rechazar inscripción duplicada",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", function () { pm.response.to.have.status(409); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Rechaza una segunda inscripción del mismo socio en la misma sesión.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socio\": {\n    \"id\": {{idSocio}}\n  },\n  \"clase\": {\n    \"id\": {{idSpinning}}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "23. Rechazar inscripción sin cupo",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", function () { pm.response.to.have.status(409); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Rechaza a otro socio cuando el único lugar ya está ocupado.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socio\": {\n    \"id\": {{idSegundoSocio}}\n  },\n  \"clase\": {\n    \"id\": {{idSpinning}}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "24. Inscribir socio en yoga",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", function () { pm.response.to.have.status(201); });",
+              "pm.collectionVariables.set(\"idInscripcionYoga\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Registra otra inscripción válida en una clase con lugares disponibles.",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"socio\": {\n    \"id\": {{idSocio}}\n  },\n  \"clase\": {\n    \"id\": {{idYoga}}\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "25. Consultar inscripciones",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/inscripciones",
+        "description": "Consulta las inscripciones guardadas y sus indicadores de notificación."
+      }
+    },
+    {
+      "name": "26. Consultar confirmación",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Confirmación registrada\", () => pm.expect(pm.response.json().confirmacionEnviada).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/inscripciones/{{idInscripcion}}",
+        "description": "Comprueba que se registró la confirmación de la inscripción."
+      }
+    },
+    {
+      "name": "27. Consultar clase completa",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Sin lugares disponibles\", () => pm.expect(pm.response.json()).to.eql(0));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/clases/{{idSpinning}}/cupo",
+        "description": "Comprueba que el cupo disponible quedó en cero."
+      }
+    },
+    {
+      "name": "28. Consultar clase inexistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/clases/999999999",
+        "description": "Devuelve un error al consultar una clase que no existe."
+      }
+    },
+    {
+      "name": "29. Consultar recordatorio enviado",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const espera = Math.max(0, Number(pm.collectionVariables.get(\"recordatorioDesde\")) + 6500 - Date.now());",
+              "if (espera > 0) setTimeout(function () {}, espera);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Recordatorio registrado\", () => pm.expect(pm.response.json().recordatorioEnviado).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseURL}}/inscripciones/{{idInscripcion}}",
+        "description": "Comprueba el recordatorio al llegar a las dos horas previas al inicio de la clase."
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseURL",
+      "value": "http://localhost:8081/api/v1"
+    }
+  ]
+}
