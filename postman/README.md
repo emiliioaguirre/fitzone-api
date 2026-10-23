@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../docs/assets/fitzone.svg" alt="FitZone" width="112">
+  <img src="assets/postman.svg" alt="Postman" width="160">
 </p>
 
 <h1 align="center">FitZone en Postman</h1>

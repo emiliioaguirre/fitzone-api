@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/fitzone.svg" alt="Icono de FitZone" width="112">
+  <img src="docs/assets/fitzone.png" alt="Icono de FitZone" width="112">
 </p>
 
 <h1 align="center">API de FitZone</h1>
@@ -66,7 +66,6 @@ Crear la base desde MySQL Workbench y configurar las credenciales en un archivo 
 
 ```sql
 CREATE DATABASE IF NOT EXISTS fitzone CHARACTER SET utf8mb4;
-CREATE DATABASE IF NOT EXISTS fitzone_pruebas CHARACTER SET utf8mb4;
 ```
 
 | Variable | Uso |
@@ -74,7 +73,6 @@ CREATE DATABASE IF NOT EXISTS fitzone_pruebas CHARACTER SET utf8mb4;
 | `DB_URL` | Dirección de la base de datos. |
 | `DB_USERNAME` | Usuario de MySQL. |
 | `DB_PASSWORD` | Contraseña local de MySQL. |
-| `TEST_DB_URL` | Base separada para las verificaciones de integración. |
 
 Ejecutar `FitzoneApplication.java` con **Run Java**.
 
