@@ -4,3 +4,15 @@ target/
 .idea/
 .vscode/
 *.iml
+
+# Archivos locales de asistentes
+AGENTS.md
+CLAUDE.md
+ForEmilioFromCodex.md
+ForEmilioFromClaude.md
+.claude/
+.codex/
+.agents/
+.superpowers/
+docs/superpowers/
+.mcp.json
